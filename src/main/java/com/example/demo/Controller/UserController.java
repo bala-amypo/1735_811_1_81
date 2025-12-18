@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -23,17 +23,17 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public UserEntity registerUser(@RequestBody UserEntity user) {
+    public User registerUser(@RequestBody User user) {
         return ser.registerUser(user);
     }
 
     @GetMapping
-    public List<UserEntity> getAllUsers() {
+    public List<User> getAllUsers() {
         return ser.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public UserEntity getUserById(@PathVariable Long id) {
+    public UsergetUserById(@PathVariable Long id) {
         return ser.getUserById(id);
     }
 }
