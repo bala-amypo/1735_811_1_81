@@ -19,11 +19,13 @@ public class User{
     private LocalDateTime:createdAt;
 
 
-    public StudentEntity(Long id,String name,String email,float cgpa){
-        //this.id=id;
-        this.name=name;
+    public User(Long id,String fullname,String email,String department,
+    String role,String password, LocalDateTime createdAt){
+        this.fullname=fullname;
         this.email=email;
-        this.cgpa=cgpa;
+        this.department=department;
+        this.role=role;
+        this.password
     }
     public StudentEntity(){
 
