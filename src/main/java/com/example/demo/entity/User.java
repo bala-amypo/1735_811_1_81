@@ -16,7 +16,8 @@ public class User{
     private String department;
     private String role;
     private String password;
-    
+    private LocalDateTime:createdAt;
+
 
     public StudentEntity(Long id,String name,String email,float cgpa){
         //this.id=id;
