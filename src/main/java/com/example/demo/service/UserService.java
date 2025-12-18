@@ -2,15 +2,15 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.User;
 
 public interface UserService {
 
-    UserEntity registerUser(UserEntity user);
+    User registerUser(User user);
 
-    List<UserEntity> getAllUsers();
+    List<User> getAllUsers();
 
-    UserEntity getUserById(Long id);
+    User getUserById(Long id);
 }
 
 

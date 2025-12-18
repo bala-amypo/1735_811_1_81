@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 
 @Service
@@ -17,17 +17,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity registerUser(UserEntity user) {
+    public User registerUser(User user) {
         return repo.save(user);
     }
 
     @Override
-    public List<UserEntity> getAllUsers() {
+    public List<User> getAllUsers() {
         return repo.findAll();
     }
 
     @Override
-    public UserEntity getUserById(Long id) {
+    public User getUserById(Long id) {
         return repo.findById(id).orElse(null);
     }
 }
