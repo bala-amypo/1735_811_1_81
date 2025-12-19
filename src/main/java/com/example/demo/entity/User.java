@@ -15,7 +15,7 @@ public class User {
     private String email;
     private String department;
     private String role;
-    @
+    @Min(value=8,message="Password must be at"
     private String password;
     private LocalDateTime createdAt;
     public User(Long id, String fullName, String email, String department, String role, String password, LocalDateTime createdAt) {
