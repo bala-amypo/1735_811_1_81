@@ -16,16 +16,18 @@ public class UserController {
     public UserController(UserService service) {
         this.service = service;
     }
+
     @PostMapping
-    public User createUser(@Valid @RequestBody User user) {
-        return service.createUser(user);
+    public User registerUser(@Valid @RequestBody User user) {
+        return service.registerUser(user);
     }
+
     @GetMapping
     public List<User> getAllUsers() {
         return service.getAllUsers();
     }
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return service.getUserById(id);
+    public User getUser(@PathVariable Long id) {
+        return service.getUser(id);
     }
 }
