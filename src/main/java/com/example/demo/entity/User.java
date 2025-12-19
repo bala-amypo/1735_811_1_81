@@ -13,9 +13,10 @@ public class User {
     private Long id;
     private String fullName;
     private String email;
+    @NotBlank(message="Department is required")
     private String department;
     private String role;
-    @Min(value=8,message="Password must be at"
+    @Min(value=8,message="Password must be at least 8 characters")
     private String password;
     private LocalDateTime createdAt;
     public User(Long id, String fullName, String email, String department, String role, String password, LocalDateTime createdAt) {
