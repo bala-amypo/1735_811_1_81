@@ -10,25 +10,24 @@ import java.util.List;
 @RequestMapping("/api/transfers")
 public class TransferRecordController {
 
-    private final TransferRecordService service;
+    private final TransferRecordService transferRecordService;
 
-    public TransferRecordController(TransferRecordService service) {
-        this.service = service;
+    public TransferRecordController(TransferRecordService transferRecordService) {
+        this.transferRecordService = transferRecordService;
     }
 
     @PostMapping("/{assetId}")
-    public TransferRecord createTransfer(@PathVariable Long assetId,
-                                         @RequestBody TransferRecord record) {
-        return service.createTransfer(assetId, record);
+    public TransferRecord createTransfer(@PathVariable Long assetId, @RequestBody TransferRecord tr) {
+        return transferRecordService.createTransfer(assetId, tr);
     }
 
     @GetMapping("/asset/{assetId}")
     public List<TransferRecord> getTransfersForAsset(@PathVariable Long assetId) {
-        return service.getTransfersForAsset(assetId);
+        return transferRecordService.getTransfersForAsset(assetId);
     }
 
     @GetMapping("/{id}")
-    public TransferRecord getTransfer(@PathVariable Long id) {
-        return service.getTransfer(id);
+    public TransferRecord getTransferById(@PathVariable Long id) {
+        return transferRecordService.getTransfer(id);
     }
 }

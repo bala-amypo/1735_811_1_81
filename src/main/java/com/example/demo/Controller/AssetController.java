@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AssetStatusUpdateRequest;
 import com.example.demo.entity.Asset;
 import com.example.demo.service.AssetService;
 import org.springframework.web.bind.annotation.*;
@@ -10,30 +11,29 @@ import java.util.List;
 @RequestMapping("/api/assets")
 public class AssetController {
 
-    private final AssetService service;
+    private final AssetService assetService;
 
-    public AssetController(AssetService service) {
-        this.service = service;
+    public AssetController(AssetService assetService) {
+        this.assetService = assetService;
     }
 
     @PostMapping
     public Asset createAsset(@RequestBody Asset asset) {
-        return service.createAsset(asset);
+        return assetService.createAsset(asset);
     }
 
     @GetMapping
     public List<Asset> getAllAssets() {
-        return service.getAllAssets();
+        return assetService.getAllAssets();
     }
 
     @GetMapping("/{id}")
-    public Asset getAsset(@PathVariable Long id) {
-        return service.getAsset(id);
+    public Asset getAssetById(@PathVariable Long id) {
+        return assetService.getAsset(id);
     }
 
     @PutMapping("/status/{id}")
-    public Asset updateStatus(@PathVariable Long id,
-                              @RequestParam String status) {
-        return service.updateStatus(id, status);
+    public Asset updateStatus(@PathVariable Long id, @RequestBody AssetStatusUpdateRequest request) {
+        return assetService.updateStatus(id, request.getStatus());
     }
 }

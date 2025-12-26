@@ -10,26 +10,25 @@ import java.util.List;
 @RequestMapping("/api/events")
 public class LifecycleEventController {
 
-    private final LifecycleEventService service;
+    private final LifecycleEventService lifecycleEventService;
 
-    public LifecycleEventController(LifecycleEventService service) {
-        this.service = service;
+    public LifecycleEventController(LifecycleEventService lifecycleEventService) {
+        this.lifecycleEventService = lifecycleEventService;
     }
 
     @PostMapping("/{assetId}/{userId}")
-    public LifecycleEvent logEvent(@PathVariable Long assetId,
-                                   @PathVariable Long userId,
+    public LifecycleEvent logEvent(@PathVariable Long assetId, @PathVariable Long userId,
                                    @RequestBody LifecycleEvent event) {
-        return service.logEvent(assetId, userId, event);
+        return lifecycleEventService.logEvent(assetId, userId, event);
     }
 
     @GetMapping("/asset/{assetId}")
-    public List<LifecycleEvent> getEventsForAsset(@PathVariable Long assetId) {
-        return service.getEventsForAsset(assetId);
+    public List<LifecycleEvent> getEventsByAsset(@PathVariable Long assetId) {
+        return lifecycleEventService.getEventsForAsset(assetId);
     }
 
     @GetMapping("/{id}")
-    public LifecycleEvent getEvent(@PathVariable Long id) {
-        return service.getEvent(id);
+    public LifecycleEvent getEventById(@PathVariable Long id) {
+        return lifecycleEventService.getEvent(id);
     }
 }

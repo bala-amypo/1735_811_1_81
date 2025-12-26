@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.DisposalRecord;
 import com.example.demo.service.DisposalRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,24 +11,21 @@ import java.util.List;
 @RequestMapping("/api/disposals")
 public class DisposalRecordController {
 
-    private final DisposalRecordService service;
-
-    public DisposalRecordController(DisposalRecordService service) {
-        this.service = service;
-    }
+    @Autowired
+    private DisposalRecordService disposalRecordService;
 
     @PostMapping("/{assetId}")
-    public DisposalRecord createDisposal(@PathVariable Long assetId,
-                                         @RequestBody DisposalRecord disposal) {
-        return service.createDisposal(assetId, disposal);
+    public DisposalRecord createDisposal(@PathVariable Long assetId, @RequestBody DisposalRecord dr) {
+        return disposalRecordService.createDisposal(assetId, dr);
     }
 
     @GetMapping
     public List<DisposalRecord> getAllDisposals() {
-        return service.getAllDisposals();
+        return disposalRecordService.getAllDisposals();
     }
+
     @GetMapping("/{id}")
-    public DisposalRecord getDisposal(@PathVariable Long id) {
-        return service.getDisposal(id);
+    public DisposalRecord getDisposalById(@PathVariable Long id) {
+        return disposalRecordService.getDisposal(id);
     }
 }
