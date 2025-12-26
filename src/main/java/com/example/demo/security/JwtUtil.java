@@ -4,6 +4,7 @@ import com.example.demo.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -15,7 +16,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    // Rule 8.1: Uses JJWT 0.12.x secure key generation for HS256
+    // Using a consistent SecretKey generation for 0.12.x
     private final SecretKey key = Jwts.SIG.HS256.key().build();
 
     public String extractUsername(String token) {
@@ -35,10 +36,7 @@ public class JwtUtil {
         return claimsResolver.apply(claims);
     }
 
-    /**
-     * Rule 8.1: Parses and validates the token.
-     * Returns Jws<Claims> to allow tests to call .getPayload()
-     */
+    // This method must return Jws<Claims> to support .getPayload() in Test Cases
     public Jws<Claims> parseToken(String token) {
         return Jwts.parser()
                 .verifyWith(key)
@@ -46,23 +44,16 @@ public class JwtUtil {
                 .parseSignedClaims(token);
     }
 
-    /**
-     * Rule 8.1: Generic token builder using modern JJWT 0.12.x syntax
-     */
     public String generateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .claims(claims)
                 .subject(subject)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                // 10 hours expiration
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) 
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(key)
                 .compact();
     }
 
-    /**
-     * Rule 8.1: Specifically sets userId, email, and role claims
-     */
     public String generateTokenForUser(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", user.getId());
