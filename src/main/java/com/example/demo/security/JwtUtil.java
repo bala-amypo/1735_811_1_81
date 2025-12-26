@@ -15,7 +15,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    // Generate a secure key for HS256
+    // Rule 8.1: Uses JJWT 0.12.x secure key generation for HS256
     private final SecretKey key = Jwts.SIG.HS256.key().build();
 
     public String extractUsername(String token) {
@@ -35,7 +35,10 @@ public class JwtUtil {
         return claimsResolver.apply(claims);
     }
 
-    // This method returns Jws<Claims> which has the .getPayload() method the test case needs
+    /**
+     * Rule 8.1: Parses and validates the token.
+     * Returns Jws<Claims> to allow tests to call .getPayload()
+     */
     public Jws<Claims> parseToken(String token) {
         return Jwts.parser()
                 .verifyWith(key)
@@ -43,16 +46,23 @@ public class JwtUtil {
                 .parseSignedClaims(token);
     }
 
+    /**
+     * Rule 8.1: Generic token builder using modern JJWT 0.12.x syntax
+     */
     public String generateToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .claims(claims)
                 .subject(subject)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours
+                // 10 hours expiration
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) 
                 .signWith(key)
                 .compact();
     }
 
+    /**
+     * Rule 8.1: Specifically sets userId, email, and role claims
+     */
     public String generateTokenForUser(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", user.getId());
