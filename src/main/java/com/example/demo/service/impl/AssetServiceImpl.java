@@ -1,9 +1,9 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.entity.Asset;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.exception.ValidationException;
 import com.example.demo.repository.AssetRepository;
+import com.example.demo.service.AssetService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,37 +11,31 @@ import java.util.List;
 @Service
 public class AssetServiceImpl implements AssetService {
 
-    private final AssetRepository repo;
+    private final AssetRepository assetRepository;
 
-    public AssetServiceImpl(AssetRepository repo) {
-        this.repo = repo;
+    public AssetServiceImpl(AssetRepository assetRepository) {
+        this.assetRepository = assetRepository;
     }
 
     @Override
     public Asset createAsset(Asset asset) {
-
-        if (repo.findByAssetTag(asset.getAssetTag()).isPresent()) {
-            throw new ValidationException("Asset tag already exists");
-        }
-
-        return repo.save(asset);
+        return assetRepository.save(asset);
     }
 
     @Override
-    public Asset getAsset(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Asset not found"));
+    public Asset getAsset(Long id) throws ResourceNotFoundException {
+        return assetRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Asset not found"));
     }
 
     @Override
     public List<Asset> getAllAssets() {
-        return repo.findAll();
+        return assetRepository.findAll();
     }
 
     @Override
-    public Asset updateStatus(Long assetId, String status) {
-        Asset asset = getAsset(assetId);
+    public Asset updateStatus(Long id, String status) throws ResourceNotFoundException {
+        Asset asset = getAsset(id);
         asset.setStatus(status);
-        return repo.save(asset);
+        return assetRepository.save(asset);
     }
 }
