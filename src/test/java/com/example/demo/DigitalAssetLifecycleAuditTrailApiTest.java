@@ -23,23 +23,10 @@ import org.testng.annotations.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-/**
- * Single TestNG class with 60+ tests, ordered by:
- * 1. Simple Servlet / Controller-like behavior
- * 2. CRUD (Spring Boot + REST)
- * 3. DI & IoC
- * 4. Hibernate config & CRUD
- * 5. JPA mapping & normalization
- * 6. Many-to-many & associations
- * 7. Security & JWT
- * 8. HQL / advanced querying (simulated via repositories/services)
- */
-@Listeners(TestResultListener.class)
 public class DigitalAssetLifecycleAuditTrailApiTest {
 
     @Mock
