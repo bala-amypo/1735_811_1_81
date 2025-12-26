@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.LifecycleEvent;
 import com.example.demo.service.LifecycleEventService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,18 +18,17 @@ public class LifecycleEventController {
     }
 
     @PostMapping("/{assetId}/{userId}")
-    public LifecycleEvent logEvent(@PathVariable Long assetId, @PathVariable Long userId,
-                                   @RequestBody LifecycleEvent event) {
-        return lifecycleEventService.logEvent(assetId, userId, event);
+    public ResponseEntity<LifecycleEvent> logEvent(@PathVariable Long assetId, @PathVariable Long userId, @RequestBody LifecycleEvent event) {
+        return ResponseEntity.ok(lifecycleEventService.logEvent(assetId, userId, event));
     }
 
     @GetMapping("/asset/{assetId}")
-    public List<LifecycleEvent> getEventsByAsset(@PathVariable Long assetId) {
-        return lifecycleEventService.getEventsForAsset(assetId);
+    public ResponseEntity<List<LifecycleEvent>> getEventsForAsset(@PathVariable Long assetId) {
+        return ResponseEntity.ok(lifecycleEventService.getEventsForAsset(assetId));
     }
 
     @GetMapping("/{id}")
-    public LifecycleEvent getEventById(@PathVariable Long id) {
-        return lifecycleEventService.getEvent(id);
+    public ResponseEntity<LifecycleEvent> getEvent(@PathVariable Long id) {
+        return ResponseEntity.ok(lifecycleEventService.getEvent(id));
     }
 }
