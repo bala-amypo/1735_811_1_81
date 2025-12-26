@@ -1,65 +1,64 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "disposal_records")
 public class DisposalRecord {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String reason;
+    @OneToOne
+    @JoinColumn(name = "asset_id")
+    private Asset asset;
+
+    private String disposalMethod;
 
     private LocalDate disposalDate;
 
     @ManyToOne
-    private Asset asset;
-
-    @ManyToOne
+    @JoinColumn(name = "approved_by_id")
     private User approvedBy;
+
+    private String notes;
+
+    private LocalDateTime createdAt;
 
     public DisposalRecord() {}
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public LocalDate getDisposalDate() {
-        return disposalDate;
-    }
-
-    public Asset getAsset() {
-        return asset;
-    }
-
-    public User getApprovedBy() {
-        return approvedBy;
-    }
-
-    public void setId(Long id) {
+    public DisposalRecord(Long id, Asset asset, String disposalMethod, LocalDate disposalDate, User approvedBy, String notes, LocalDateTime createdAt) {
         this.id = id;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
-    public void setDisposalDate(LocalDate disposalDate) {
-        this.disposalDate = disposalDate;
-    }
-
-    public void setAsset(Asset asset) {
         this.asset = asset;
+        this.disposalMethod = disposalMethod;
+        this.disposalDate = disposalDate;
+        this.approvedBy = approvedBy;
+        this.notes = notes;
+        this.createdAt = createdAt;
     }
 
-    public void setApprovedBy(User approvedBy) {
-        this.approvedBy = approvedBy;
+    @PrePersist
+    public void prePersist() {
+        if (this.createdAt == null) {
+            this.createdAt = LocalDateTime.now();
+        }
     }
+
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public Asset getAsset() { return asset; }
+    public void setAsset(Asset asset) { this.asset = asset; }
+    public String getDisposalMethod() { return disposalMethod; }
+    public void setDisposalMethod(String disposalMethod) { this.disposalMethod = disposalMethod; }
+    public LocalDate getDisposalDate() { return disposalDate; }
+    public void setDisposalDate(LocalDate disposalDate) { this.disposalDate = disposalDate; }
+    public User getApprovedBy() { return approvedBy; }
+    public void setApprovedBy(User approvedBy) { this.approvedBy = approvedBy; }
+    public String getNotes() { return notes; }
+    public void setNotes(String notes) { this.notes = notes; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
