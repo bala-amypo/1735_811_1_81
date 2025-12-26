@@ -1,22 +1,20 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AssetStatusUpdateRequest;
 import com.example.demo.entity.Asset;
 import com.example.demo.service.AssetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/assets")
 public class AssetController {
 
-    private final AssetService assetService;
-
-    public AssetController(AssetService assetService) {
-        this.assetService = assetService;
-    }
+    @Autowired
+    private AssetService assetService;
 
     @PostMapping
     public ResponseEntity<Asset> createAsset(@RequestBody Asset asset) {
@@ -24,8 +22,8 @@ public class AssetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Asset>> getAllAssets() {
-        return ResponseEntity.ok(assetService.getAllAssets());
+    public List<Asset> getAllAssets() {
+        return assetService.getAllAssets();
     }
 
     @GetMapping("/{id}")
@@ -33,8 +31,8 @@ public class AssetController {
         return ResponseEntity.ok(assetService.getAsset(id));
     }
 
-    @PutMapping("/status/{id}")
-    public ResponseEntity<Asset> updateStatus(@PathVariable Long id, @RequestBody AssetStatusUpdateRequest request) {
-        return ResponseEntity.ok(assetService.updateStatus(id, request.getStatus()));
+    @PostMapping("/status/{id}")
+    public ResponseEntity<Asset> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
+        return ResponseEntity.ok(assetService.updateStatus(id, request.get("status")));
     }
 }

@@ -2,33 +2,34 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.DisposalRecord;
 import com.example.demo.service.DisposalRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/disposals")
 public class DisposalRecordController {
 
-    private final DisposalRecordService disposalRecordService;
+    @Autowired
+    private DisposalRecordService disposalRecordService;
 
-    public DisposalRecordController(DisposalRecordService disposalRecordService) {
-        this.disposalRecordService = disposalRecordService;
-    }
-
-    @PostMapping("/{assetId}")
-    public ResponseEntity<DisposalRecord> createDisposal(@PathVariable Long assetId, @RequestBody DisposalRecord disposal) {
-        return ResponseEntity.ok(disposalRecordService.createDisposal(assetId, disposal));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<DisposalRecord>> getAllDisposals() {
-        return ResponseEntity.ok(disposalRecordService.getAllDisposals());
+    @PostMapping
+    public ResponseEntity<DisposalRecord> createDisposal(@RequestBody DisposalRecord record) {
+        Long assetId = record.getAsset() != null ? record.getAsset().getId() : null;
+        if (assetId == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        DisposalRecord savedRecord = disposalRecordService.createDisposal(assetId, record);
+        return ResponseEntity.ok(savedRecord);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DisposalRecord> getDisposal(@PathVariable Long id) {
-        return ResponseEntity.ok(disposalRecordService.getDisposal(id));
+    public ResponseEntity<DisposalRecord> getDisposalById(@PathVariable Long id) {
+        try {
+            DisposalRecord record = disposalRecordService.getDisposal(id);
+            return ResponseEntity.ok(record);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
