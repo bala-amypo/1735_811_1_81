@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DisposalRecordRepository extends JpaRepository<DisposalRecord, Long> {
-    // Standard JPA methods are sufficient for this repository
 }

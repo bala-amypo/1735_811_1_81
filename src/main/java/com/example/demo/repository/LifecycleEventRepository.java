@@ -7,6 +7,5 @@ import java.util.List;
 
 @Repository
 public interface LifecycleEventRepository extends JpaRepository<LifecycleEvent, Long> {
-    // Matches test cases t44 and t80: findByAsset_Id
     List<LifecycleEvent> findByAsset_Id(Long assetId);
 }
