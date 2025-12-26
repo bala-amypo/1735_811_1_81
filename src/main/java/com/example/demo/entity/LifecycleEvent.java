@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,61 +11,59 @@ public class LifecycleEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String eventType;
+
+    private LocalDateTime eventTime;
+
+    private String description;
+
     @ManyToOne
     private Asset asset;
 
-    private String eventType;
-    private String eventDescription;
-    private LocalDateTime eventDate;
-
-    @ManyToOne
-    private User performedBy;
-
     @PrePersist
-    public void setEventDate() {
-        this.eventDate = LocalDateTime.now();
+    public void onCreate() {
+        eventTime = LocalDateTime.now();
     }
 
-    public LifecycleEvent() {
-    }
+    public LifecycleEvent() {}
 
     public Long getId() {
         return id;
-    }
-
-    public Asset getAsset() {
-        return asset;
-    }
-
-    public void setAsset(Asset asset) {
-        this.asset = asset;
     }
 
     public String getEventType() {
         return eventType;
     }
 
+    public LocalDateTime getEventTime() {
+        return eventTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Asset getAsset() {
+        return asset;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setEventType(String eventType) {
         this.eventType = eventType;
     }
 
-    public String getEventDescription() {
-        return eventDescription;
+    public void setEventTime(LocalDateTime eventTime) {
+        this.eventTime = eventTime;
     }
 
-    public void setEventDescription(String eventDescription) {
-        this.eventDescription = eventDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public LocalDateTime getEventDate() {
-        return eventDate;
-    }
-
-    public User getPerformedBy() {
-        return performedBy;
-    }
-
-    public void setPerformedBy(User performedBy) {
-        this.performedBy = performedBy;
+    public void setAsset(Asset asset) {
+        this.asset = asset;
     }
 }
