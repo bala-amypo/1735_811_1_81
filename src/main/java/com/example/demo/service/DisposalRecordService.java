@@ -1,11 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.DisposalRecord;
-import com.example.demo.exception.ValidationException;
+import java.util.List;
 
 public interface DisposalRecordService {
-
-    DisposalRecord createDisposal(Long assetId, DisposalRecord disposal) throws ValidationException;
-
+    DisposalRecord createDisposal(Long assetId, DisposalRecord disposal);
     DisposalRecord getDisposal(Long id);
+    List<DisposalRecord> getAllDisposals();
 }
