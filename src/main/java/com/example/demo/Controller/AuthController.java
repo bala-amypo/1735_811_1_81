@@ -31,9 +31,7 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
-    /* =========================
-       REGISTER
-       ========================= */
+
     @PostMapping("/register")
     public UserResponse register(@RequestBody RegisterRequest request) {
 
@@ -56,9 +54,6 @@ public class AuthController {
         return response;
     }
 
-    /* =========================
-       LOGIN
-       ========================= */
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
 
