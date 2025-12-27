@@ -111,9 +111,7 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
-
-    // ✅ REQUIRED for JJWT 0.12.x (must be at least 256 bits)
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60; 
     private static final SecretKey KEY =
             Keys.hmacShaKeyFor("my-super-secret-key-my-super-secret-key-123456".getBytes());
 
