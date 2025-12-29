@@ -55,6 +55,31 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+   
+public AuthResponse login(@RequestBody LoginRequest request) {
+
+    authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                    request.getEmail(),
+                    request.getPassword()
+            )
+    );
+
+    User user = userRepository.findByEmail(request.getEmail())
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+    String token = jwtUtil.generateTokenForUser(user);
+
+    AuthResponse response = new AuthResponse();
+    response.setToken(token);
+    response.setEmail(user.getEmail());
+    response.setRole(user.getRole());
+    response.setUserId(user.getId());
+    response.setMessage("Login successful");
+
+    return response;
+}
+
     public AuthResponse login(@RequestBody LoginRequest request) {
 
         authenticationManager.authenticate(
