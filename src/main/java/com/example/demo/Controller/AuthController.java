@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.LoginRequest;
-import com.example.demo.dto.LoginResponse;
+import com.example.demo.dto.AuthResponse;
 import com.example.demo.dto.RegisterRequest;
 import com.example.demo.dto.UserResponse;
 import com.example.demo.entity.User;
@@ -55,7 +55,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request) {
+    public AuthResponse login(@RequestBody LoginRequest request) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -68,6 +68,6 @@ public class AuthController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String token = jwtUtil.generateTokenForUser(user);
-        return new LoginResponse(token);
+        return new AuthResponse(token);
     }
 }
